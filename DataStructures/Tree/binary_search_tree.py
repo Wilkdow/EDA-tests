@@ -61,15 +61,17 @@ def get_min_node(root):
     return root['key']
 
 def get_max(my_bst):
+    print(is_empty(my_bst))
     if is_empty(my_bst):
         return None
+    
     return get_max_node(my_bst['root'])
     
 def get_max_node(root):
 
     while root['right'] != None:
         root = root['right']
-    return root['right']
+    return root['key']
 
 def size(my_bst):
     return size_tree(my_bst['root'])
