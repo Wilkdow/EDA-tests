@@ -135,10 +135,15 @@ def height(my_best):
     return height_tree(my_best['root'])
 
 def height_tree(root, n=1):
-    if root['left'] and root['right']:
+    if root['left'] is None and root['right'] is None:
         return n
     n += 1
-    return max(height_tree(root['right'], n), height_tree(root['left'], n))
+    r_height, l_height = 0, 0
+    if root['right'] is not None:
+        r_height = height_tree(root['right'], n)
+    if root['left'] is not None:
+        l_height = height_tree(root['left'], n)
+    return max(r_height, l_height)
 
 def keys(my_bst, key_initial, key_final):
     lst = lt.new_list()
