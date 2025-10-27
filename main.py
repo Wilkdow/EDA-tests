@@ -2,15 +2,15 @@ from DataStructures.List import array_list as lt
 from DataStructures.Map import map_linear_probing as lp
 from DataStructures.Map import map_separate_chaining as sc
 from DataStructures.Tree import binary_search_tree as bst
+from DataStructures.Tree import red_black_tree as rbt
+from DataStructures.Tree import rbt_node as rbtn
+from DataStructures.Tree import tree_traversal as trav
+import logic
 
-map = bst.new_map()
-bst.put(map, '2020', 'uno')
-bst.put(map, '2021', 'dos')
-bst.put(map, '2020', 'one')
-bst.put(map, '2023', 'one')
-bst.put(map, '2024', 'one')
-bst.put(map, '2025', 'one')
-bst.put(map, '2026', 'one')
-bst.put(map, '2027', 'one')
-bst.put(map, '2028', 'one')
-print(bst.height(map))
+map = rbt.new_map()
+rbt.put(map, 4, '')
+rbt.put(map, 7, '')
+rbt.put(map, 12, '')
+rbt.put(map, 15, '')
+rbt.put(map, 3, '')
+print(rbt.get(map, 7))

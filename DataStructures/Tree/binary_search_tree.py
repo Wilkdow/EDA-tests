@@ -33,7 +33,6 @@ def insert_node(node, key, value):
     elif key < bst_node.get_key(node):
         node['left'] = insert_node(node['left'], key, value)
         bst_node.update_size(node)
-        return node
     elif key > bst_node.get_key(node):
         node['right'] = insert_node(node['right'], key, value)
         bst_node.update_size(node)
