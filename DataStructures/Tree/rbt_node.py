@@ -94,13 +94,14 @@ def change_color(my_node, color):
     my_node["color"] = color
 
 def get_left_child(node):
-    if node['left'] == None:
+    
+    if node['left'] == None or node == None:
         return None 
     else: 
         return node['left']
     
 def get_right_child(node):
-    if node['right'] == None:
+    if node['right'] == None or node == None:
         return None 
     else: 
         return node['right']

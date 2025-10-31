@@ -26,6 +26,7 @@ def insert_node(node, key, value):
     
     if node is None:
         node = bst_node.new_node(key, value)
+        bst_node.increase_size(node)
         return node
     if key == bst_node.get_key(node):
         node = bst_node.replace_value(node, value)
@@ -60,10 +61,8 @@ def get_min_node(root):
     return root['key']
 
 def get_max(my_bst):
-    print(is_empty(my_bst))
     if is_empty(my_bst):
         return None
-    
     return get_max_node(my_bst['root'])
     
 def get_max_node(root):
@@ -143,7 +142,6 @@ def height_tree(root, n=1):
     if root['left'] is not None:
         l_height = height_tree(root['left'], n)
     return max(r_height, l_height)
-
 def keys(my_bst, key_initial, key_final):
     lst = lt.new_list()
     if not is_empty(my_bst):
@@ -171,9 +169,9 @@ def values_range(root, key_initial,key_final, lst):
         if bst_node.get_key(root) >= key_initial and bst_node.get_key(root) <= key_final:
             lt.add_last(lst, bst_node.get_value(root))
         if bst_node.get_key(root) >= key_initial:
-            lst = keys_range(root['left'], key_initial,key_final, lst)
+            lst = values_range(root['left'], key_initial,key_final, lst)
         if bst_node.get_key(root) <= key_final:
-            lst = keys_range(root['right'], key_initial,key_final, lst)
+            lst = values_range(root['right'], key_initial,key_final, lst)
     return lst
 
 def remove(my_bst, key):
@@ -242,9 +240,9 @@ def floor_key(root, key):
     elif bst_node.get_key(root) == key:
         return bst_node.get_key(root)
     elif bst_node.get_key(root) > key:
-        return ceiling_key(root['left'], key)
+        return floor_key(root['left'], key)
     elif bst_node.get_key(root) < key:
-        if ceiling_key(root['right'], key) is not None:
-            return ceiling_key(root['right'], key)
+        if floor_key(root['right'], key) is not None:
+            return floor_key(root['right'], key)
         else:
             return bst_node.get_key(root)

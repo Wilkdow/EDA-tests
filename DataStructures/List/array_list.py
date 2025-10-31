@@ -7,9 +7,19 @@ def new_list():
 
 def get_element(my_list, index):
     
+    if index >= size(my_list):
+        return None
     return my_list["elements"][index]
 
-def is_present(my_list, element, cmp_function):
+def default_compare(element1, element2):
+    
+    if element1 == element2:
+        return 0
+    elif element1 > element2:
+        return 1
+    return -1
+
+def is_present(my_list, element, cmp_function= default_compare):
     
     size = my_list["size"]
     if size > 0:
