@@ -49,56 +49,62 @@ def priority(heap,parent, child):
     
 def exchange(heap, parent_pos, child_pos):
     heap_list = heap['elements']
-    lt.exchange(heap_list, parent_pos, child_pos)
+    heap_list = lt.exchange(heap_list, parent_pos, child_pos)
     return heap
-    
-def swim(heap, pos):
-    if pos <= 1:
-        return heap
 
+def swim(heap, pos):
     heap_list = heap['elements']
-    child = lt.get_element(heap_list, pos)
-    parent = lt.get_element(heap_list, pos // 2)
+    while pos > 1:
+        parent_pos = pos // 2
+        child = lt.get_element(heap_list, pos)
+        parent = lt.get_element(heap_list, parent_pos)
+        
+        if priority(heap, parent, child):
+            break
+        
+        exchange(heap, parent_pos, pos)
+        pos = parent_pos
     
-    if not priority(heap, parent, child):
-        exchange(heap, pos // 2, pos)
-    
-    swim(heap, pos//2)
+    return heap
 
 def insert(heap, priority, value):
     entry = pqe.new_pq_entry(priority, value)
-    s = size(heap)
     heap_list = heap['elements']
     lt.add_last(heap_list, entry)
     heap['size'] += 1
-    swim(heap, s)
+    swim(heap, heap['size'])
     return heap
 
 def sink(heap, pos):
     heap_list = heap['elements']
-    parent = lt.get_element(heap_list, pos)
-    child_1 = lt.get_element(heap_list, pos*2)
-    child_2 = lt.get_element(heap_list, pos*2 + 1)
     
-    if parent == None or (child_1 and child_2) == None:
-        return heap
-    
-    if priority(heap, parent, child_1):
-        exchange(heap, pos, pos * 2)
-    
-    if priority(heap, parent, child_2):
-        exchange(heap, pos, pos * 2 + 1)
+    while pos * 2 < size(heap):
+        child_pos = pos * 2
+        child = lt.get_element(heap_list, child_pos)
+        if pos * 2 + 1 < size(heap):
+            child_pos_2 = child_pos + 1
+            child_2 = lt.get_element(heap_list, child_pos_2)
+            if not priority(heap, child, child_2):
+                child = child_2
+                child_pos = child_pos_2
         
-    sink(heap, pos * 2)
-    sink(heap, pos * 2 + 1)
+        parent = lt.get_element(heap_list, pos)
+        
+        if priority(heap, parent, child):
+            break
+        
+        exchange(heap, pos, child_pos)
+        pos = child_pos
+    
+    return heap
 
 def remove(heap):
     if is_empty(heap):
         return None
     
     heap_list = heap['elements']
-    ele = lt.get_element(heap_list, 1)
-    lt.delete_element(heap_list, 1)
+    exchange(heap, 1, size(heap))
+    ele = lt.remove_last(heap_list)
     heap['size'] -= 1
     sink(heap, 1)
     return pqe.get_value(ele)
@@ -111,3 +117,40 @@ def get_first_priority(heap):
     ele = lt.get_element(heap_list, 1)
     
     return pqe.get_value(ele)
+
+def is_present_value(heap, value):
+    
+    heap_list = heap['elements']
+    size = lt.size(heap_list)
+    for i in range(size):
+        ele = lt.get_element(heap_list, i)
+        if ele and pqe.get_value(ele) == value:
+            return i
+    return -1
+
+def contains(heap, value):
+    if is_present_value(heap,value) == -1:
+        return False
+    else: 
+        return True
+
+def improve_priority(heap, priority, value):
+    pos= is_present_value(heap,value)
+    if pos == -1:
+        return heap
+    else:
+        nod=lt.get_element(heap['elements'], pos)
+        nod['priority'] += priority
+        
+        swim(heap,pos)
+    return heap
+    
+
+def compare_values(ele1,ele2):
+    if ele1['value'] == ele2['value']:
+        return 0
+    elif ele1['value'] > ele2['value']:
+       return 1
+    else:
+        return -1
+    
