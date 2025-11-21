@@ -45,7 +45,7 @@ def is_empty(my_bst):
 def contains(my_bst, key):
     presente = False
     gett=get(my_bst,key)
-    if gett == None:
+    if gett != None:
         presente = True
     return presente
 
@@ -111,7 +111,8 @@ def delete_min_tree(node):
         return node['right']
     else:
         node['size'] -= 1
-        return delete_min_tree(node['left'])
+        node['left'] = delete_min_tree(node['left'])
+    return node
 
 def delete_max(my_bst):
     if not is_empty(my_bst):
@@ -125,7 +126,8 @@ def delete_max_tree(node):
         return node['left']
     else:
         node['size'] -= 1
-        return delete_max_tree(node['right'])
+        node['right'] = delete_max_tree(node['right'])
+    return node
 
 def height(my_best):
     if is_empty(my_best):
@@ -142,6 +144,7 @@ def height_tree(root, n=1):
     if root['left'] is not None:
         l_height = height_tree(root['left'], n)
     return max(r_height, l_height)
+
 def keys(my_bst, key_initial, key_final):
     lst = lt.new_list()
     if not is_empty(my_bst):
@@ -169,9 +172,9 @@ def values_range(root, key_initial,key_final, lst):
         if bst_node.get_key(root) >= key_initial and bst_node.get_key(root) <= key_final:
             lt.add_last(lst, bst_node.get_value(root))
         if bst_node.get_key(root) >= key_initial:
-            lst = values_range(root['left'], key_initial,key_final, lst)
+            lst = keys_range(root['left'], key_initial,key_final, lst)
         if bst_node.get_key(root) <= key_final:
-            lst = values_range(root['right'], key_initial,key_final, lst)
+            lst = keys_range(root['right'], key_initial,key_final, lst)
     return lst
 
 def remove(my_bst, key):

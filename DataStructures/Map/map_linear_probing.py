@@ -86,16 +86,22 @@ def rehash(my_map):
 
 def put(my_map, key, value):
     
+    if my_map['current_factor'] >= my_map['limit_factor']:
+        my_map = rehash(my_map)
+
     table = my_map['table']
     hash_value = mf.hash_value(my_map, key)
     occupied, slot = find_slot(my_map, key, hash_value)
     if not occupied:
         my_map['size'] += 1
         my_map['current_factor'] = size(my_map)/my_map['capacity']
-        if my_map['current_factor'] >= my_map['limit_factor']:
-            my_map = rehash(my_map)
     n_entry = me.new_map_entry(key, value)
     lt.change_info(table, slot, n_entry)
+    
+    if my_map['current_factor'] >= my_map['limit_factor']:
+        my_map = rehash(my_map)
+        my_map['current_factor'] = size(my_map)/my_map['capacity']
+    
     return my_map
 
 def contains(my_map, key):

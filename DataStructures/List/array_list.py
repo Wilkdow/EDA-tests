@@ -7,19 +7,14 @@ def new_list():
 
 def get_element(my_list, index):
     
-    if index >= size(my_list):
-        return None
     return my_list["elements"][index]
 
-def default_compare(element1, element2):
-    
-    if element1 == element2:
+def default_cmp_func(ele1, ele2):
+    if ele1 == ele2:
         return 0
-    elif element1 > element2:
-        return 1
     return -1
 
-def is_present(my_list, element, cmp_function= default_compare):
+def is_present(my_list, element, cmp_function= default_cmp_func):
     
     size = my_list["size"]
     if size > 0:
@@ -58,7 +53,6 @@ def is_empty(my_list):
     return True if my_list["size"] == 0 else False
 
 def size(my_list):
-    
     return my_list["size"]
 
 def last_element(my_list):
@@ -109,12 +103,11 @@ def insert_element(my_list, element, pos):
     
 def change_info(my_list, pos, new_info):
     
-    n_list = my_list
-    if pos >= size(n_list) or pos < 0:
+    if pos >= size(my_list) or pos < 0:
         raise Exception('IndexError: list index out of range')
     
-    n_list["elements"][pos] = new_info
-    return n_list
+    my_list["elements"][pos] = new_info
+    return my_list
     
 def exchange(my_list, pos_1, pos_2):
     
@@ -151,7 +144,7 @@ def default_sort_criteria(element_1, element_2):
         
     return is_sorted
 
-def selection_sort(list, sort_criteria):
+def selection_sort(list, sort_criteria= default_sort_criteria):
     
     l_size = size(list)
     for i in range(l_size):
@@ -166,7 +159,7 @@ def selection_sort(list, sort_criteria):
             list = exchange(list, i, min)
     return list
 
-def insertion_sort(list, sort_criteria):
+def insertion_sort(list, sort_criteria= default_sort_criteria):
     
     l_size = size(list)
     for i in range(1, l_size):
@@ -176,7 +169,7 @@ def insertion_sort(list, sort_criteria):
             k -= 1
     return list
 
-def shell_sort(list, sort_criteria):
+def shell_sort(list, sort_criteria= default_sort_criteria):
     
     l_size = size(list)
     
@@ -194,7 +187,7 @@ def shell_sort(list, sort_criteria):
         inc = inc // 3
     return list
 
-def merge_sort(list, sort_criteria):
+def merge_sort(list, sort_criteria= default_sort_criteria):
     
     l_size = size(list)
     
@@ -249,7 +242,7 @@ def partition(list, sort_criteria, lo, hi):
     exchange(list, pivot_index, hi)    
     return pivot_index
 
-def quick_sort(list, sort_criteria):
+def quick_sort(list, sort_criteria= default_sort_criteria):
     
     quick_sort_recursive(list, sort_criteria, 0, size(list)-1)
     return list

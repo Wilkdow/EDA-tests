@@ -67,7 +67,7 @@ def rotate_left(node):
 
 def rotate_right(node):
     l_node = rbtn.get_left_child(node)
-    b_node = rbtn.get_right_child(l_node)
+    b_node = rbtn.get_left_child(l_node)
     node['left'] = b_node
     l_node['right'] = None
     
@@ -189,9 +189,9 @@ def values_range(root, key_initial,key_final, lst):
         if rbtn.get_key(root) >= key_initial and rbtn.get_key(root) <= key_final:
             lt.add_last(lst, rbtn.get_value(root))
         if rbtn.get_key(root) >= key_initial:
-            lst = values_range(root['left'], key_initial,key_final, lst)
+            lst = keys_range(root['left'], key_initial,key_final, lst)
         if rbtn.get_key(root) <= key_final:
-            lst = values_range(root['right'], key_initial,key_final, lst)
+            lst = keys_range(root['right'], key_initial,key_final, lst)
     return lst
 
 def remove(my_bst, key):
@@ -280,3 +280,14 @@ def floor_key(root, key):
             return floor_key(root['right'], key)
         else:
             return rbtn.get_key(root)
+        
+def rank(rbt,key):
+    return rank_keys(rbt['root'], key)
+
+def rank_keys(root, key):
+    if root is None: 
+        return 0
+    else:
+        node = get_node(root, key)
+        if node is not None:
+            return size_tree(node['left'])

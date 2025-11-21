@@ -9,8 +9,7 @@ def new_graph(order):
     }
 
 def insert_vertex(graph, key, info):
-    vert = graph['vertices']
-    mp.put(vert, key, v.new_vertex(key, info))
+    graph['vertices'] = mp.put(graph['vertices'], key, v.new_vertex(key, info))
     return graph
 
 def add_edge(graph, key_o, key_f, weight=1):
@@ -72,3 +71,27 @@ def edges_vertex(graph, key):
         ret.append((key, info[0], info[1]))
     
     return ret
+
+def get_vertex(graph, key):
+    vert = graph['vertices']
+    vertex = mp.get(vert, key)
+    return vertex
+
+def update_vertex_information(graph, key, info):
+    
+    vert = graph['vertices']
+    vertex = mp.get(vert, key)
+    if not vertex:
+        return graph
+    
+    v.set_value(vertex, info)
+    return graph
+
+def get_vertex_information(graph, key):
+    
+    vert = graph['vertices']
+    vertex = mp.get(vert, key)
+    if not vertex:
+        raise Exception("El vertice no existe")
+    
+    return v.get_value(vertex)

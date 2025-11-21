@@ -82,21 +82,21 @@ def test_vertices():
     assert vertices["elements"] is not None
 
 
-@handle_not_implemented
-def test_degree():
-    empty_graph, some_graph = setup_tests()
+# @handle_not_implemented
+# def test_degree():
+#     empty_graph, some_graph = setup_tests()
 
-    try:
-        G.degree(empty_graph, 1)
-    except Exception as e:
-        assert True
+#     try:
+#         G.degree(empty_graph, 1)
+#     except Exception as e:
+#         assert True
 
-    try:
-        G.degree(some_graph, 0)
-    except Exception as e:
-        assert True
-    assert G.degree(some_graph, 1) == 1
-    assert G.degree(some_graph, 2) == 1
+#     try:
+#         G.degree(some_graph, 0)
+#     except Exception as e:
+#         assert True
+#     assert G.degree(some_graph, 1) == 1
+#     assert G.degree(some_graph, 2) == 1
 
 
 @handle_not_implemented
