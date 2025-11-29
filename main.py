@@ -1,43 +1,26 @@
-from DataStructures.List import array_list as lt
-from DataStructures.Map import map_linear_probing as mp
-from DataStructures.Map import map_separate_chaining as sc
-from DataStructures.Tree import binary_search_tree as bst
-from DataStructures.Tree import red_black_tree as rbt
-from DataStructures.Tree import rbt_node as rbtn
-from DataStructures.Tree import tree_traversal as trav
-from DataStructures.Priority_queue import priority_queue as pq
+# App/logic.py
 from DataStructures.Graph import digraph as G
-from DataStructures.Graph import vertex as V
-from DataStructures.Graph import bfs as BFS
-from DataStructures.Graph import dfs as DFS
-import logic
+from DataStructures.Graph import dijsktra as dijk
 
+# Crear un grafo
 my_graph = G.new_graph(1)
 
-# Agregar vértices
-my_graph = G.insert_vertex(my_graph, "A", {"nombre": "A"})
-my_graph = G.insert_vertex(my_graph, "B", {"nombre": "B"})
-my_graph = G.insert_vertex(my_graph, "C", {"nombre": "C"})
-my_graph = G.insert_vertex(my_graph, "D", {"nombre": "D"})
-my_graph = G.insert_vertex(my_graph, "E", {"nombre": "E"})
+# Agregar vértices con su información
+G.insert_vertex(my_graph, "Bogotá", {"nombre": "Bogotá", "poblacion": 7400000})
+G.insert_vertex(my_graph, "Medellín", {"nombre": "Medellín", "poblacion": 2600000})
+G.insert_vertex(my_graph, "Cali", {"nombre": "Cali", "poblacion": 2300000})
+G.insert_vertex(my_graph, "Barranquilla", {"nombre": "Barranquilla", "poblacion": 1300000})
+G.insert_vertex(my_graph, "Cartagena", {"nombre": "Cartagena", "poblacion": 1000000})
+G.insert_vertex(my_graph, "Londres", {"nombre": "Londres", "poblacion": 8866000})
 
-# Agregar aristas
-my_graph = G.add_edge(my_graph, "A", "B", 1)
-my_graph = G.add_edge(my_graph, "A", "C", 1)
-my_graph = G.add_edge(my_graph, "B", "D", 1)
-my_graph = G.add_edge(my_graph, "C", "E", 1)
-my_graph = G.add_edge(my_graph, "D", "E", 1)
+# Agregar aristas con distancias
+G.add_edge(my_graph, "Bogotá", "Medellín", 415)
+G.add_edge(my_graph, "Bogotá", "Cali", 468)
+G.add_edge(my_graph, "Medellín", "Cali", 412)
+G.add_edge(my_graph, "Medellín", "Barranquilla", 738)
+G.add_edge(my_graph, "Cali", "Barranquilla", 1020)
+G.add_edge(my_graph, "Barranquilla", "Cartagena", 120)
 
-# Realizar BFS desde el vértice A
-visited_map = BFS.bfs(my_graph, "A")
-
-# Verificar los vértices visitados
-print("Vértices visitados desde A:")
-vertices = G.vertices(my_graph)
-for i in range(lt.size(vertices)):
-    vertex = lt.get_element(vertices, i)
-    if mp.contains(visited_map, vertex):
-        info = mp.get(visited_map, vertex)
-        print(f"Vértice {vertex}:")
-        print(f"  - Distancia: {info['dist_to']}")
-        print(f"  - Viene de: {info['edge_from']}")
+# Ejecutar algoritmo de Dijkstra desde Bogotá
+structure = dijk.dijkstra(my_graph, "Bogotá")
+print(structure)

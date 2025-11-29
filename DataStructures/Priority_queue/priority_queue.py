@@ -144,6 +144,17 @@ def improve_priority(heap, priority, value):
         
         swim(heap,pos)
     return heap
+
+def improve_priority_set_amount(heap, priority, value):
+    pos= is_present_value(heap,value)
+    if pos == -1:
+        return heap
+    else:
+        nod=lt.get_element(heap['elements'], pos)
+        nod['priority'] = priority
+        
+        swim(heap,pos)
+    return heap
     
 
 def compare_values(ele1,ele2):
