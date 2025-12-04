@@ -20,6 +20,9 @@ def bfs_vertex(graph, source, visited_ht):
         vertex = q.dequeue(cola)
         adj = G.adjecents(graph, vertex)
         for v in adj:
+            val = mp.get(visited_ht, v)
+            if val != None and val['marked']:
+                continue
             q.enqueue(cola, v)
             distance = mp.get(visited_ht, vertex)['dist_to']
             visited_ht = mp.put(visited_ht, v, {'marked': True, 'edge_from': vertex, 'dist_to': distance + 1})
